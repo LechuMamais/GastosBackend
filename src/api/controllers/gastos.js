@@ -77,12 +77,19 @@ const getGastosBetweenDates = async (req, res, next) => {
           entre esas dos fechas.
           Vamos a tener que convertir las fechas a objetos de fecha de JavaScript
           y despues hacer el .find metiendole los parámetros
+          Si no recibe fechaFin, toma el momento en que se hace la peticion
           Además si las dos fechas son iguales, devolvera las de ese dia en particular
           (para eso es el if, que le suma un día a la fechaFin)
           */
         const { fechaInicio, fechaFin } = req.body;
         const fechaInicioDate = new Date(fechaInicio);
-        const fechaFinDate = new Date(fechaFin);
+        var fechaFinDate = "";
+        if(fechaFin){
+            fechaFinDate = new Date(fechaFin);
+        }else{
+            fechaFinDate = new Date();
+            console.log(fechaFinDate);
+        }
         if (fechaInicioDate.toDateString() === fechaFinDate.toDateString()) {
             fechaFinDate.setDate(fechaFinDate.getDate() + 1); // Sumar un día
         };
