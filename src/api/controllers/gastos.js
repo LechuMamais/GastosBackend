@@ -25,6 +25,15 @@ const getGastoByName = async (req, res, next) => {
     }
 };
 
+const getGastosByCategory = async (req, res, next) => {
+    try {
+        const { category } = req.params;
+        return res.status(200).json(await Gasto.find({ category: category }));
+    } catch (error) {
+        return res.status(404).json({ error });
+    }
+};
+
 const getGastosBiggerThan = async (req, res, next) => {
     try {
         /*Acá lo que vamos a hacer es traer todos los gastos y comparar
@@ -110,6 +119,7 @@ const updateGasto = async (req, res, next) => {
         return res.status(404).json({ error });
     }
 };
+
 const deleteGasto = async (req, res, next) => {
     try {
         const gasto = await Gasto.findByIdAndDelete(req.params.id);
@@ -122,4 +132,4 @@ const deleteGasto = async (req, res, next) => {
     }
 };
 
-module.exports = {getGastos, getGastoById, getGastoByName, getGastosBiggerThan, getGastosSmallerThan, getGastosBetweenDates, postGasto, updateGasto, deleteGasto};
+module.exports = {getGastos, getGastoById, getGastoByName, getGastosByCategory, getGastosBiggerThan, getGastosSmallerThan, getGastosBetweenDates, postGasto, updateGasto, deleteGasto};
